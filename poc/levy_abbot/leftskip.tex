@@ -1,0 +1,33 @@
+% Demonstrate leftskip and rightskip in pure plain tex
+\input doc.mac
+
+{\leftskip=0.0in
+\input lorem
+\par}
+
+{\leftskip=0.25in
+\input lorem
+\par}
+
+
+{\leftskip=0.5in
+\input lorem
+\par}
+
+{\leftskip=1.0in
+\input lorem
+\par}
+
+First paragraph has a post paragraph redefinition of 0.25in
+\leftskip=0.25in
+
+Next paragraph will inherit the new definition.
+
+Third paragraph will not shift back out to the right if
+the post redefinition occurs after a blank line (signals EOP).
+
+\leftskip=1.25in
+
+Final paragraph is pushed 1.25in to the right.
+
+\bye

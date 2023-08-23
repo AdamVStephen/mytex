@@ -1,0 +1,321 @@
+% vim:ft=plaintex
+
+% Some personal macros that seem to work nicely in plain \TeX
+% TODO: ACTION: migrate my macros into a common package of my own
+% TODO: How to avoid package namespace clashes ?  Must be a CTAN article or TUGBOAT article on this.
+
+\def\hsk{\medskip\hrule\medskip}
+\def\section#1{\parindent=0pt\hsk#1\hsk}
+\def\efail{\par{\hfil{\it \bf Epic Fail}\hfil}}
+\def\gotit{\par{\hfil{\it success!}\hfil}}
+
+\hsk
+This document reads in reverse, so that the most relevant attempted example or \TeX nique comes first.
+
+% --------------------------------------------------------------------------------------
+% TeX Optical Illusion diagonal lined centers, p. 96
+% --------------------------------------------------------------------------------------
+
+\section{\hbox{{\TeX in diagonal}$\vcenter{{\eightrmsmall optical illusion!?}}$}}
+
+\setbox1=\vtop{%
+\hrule width 20mm\kern 2mm%
+\hrule width 18mm\kern 2mm%
+\hrule width 16mm\kern 2mm%
+\hrule width 14mm\kern 2mm%
+\hrule width 12mm\kern 2mm%
+\hrule width 10mm\kern 2mm%
+\hrule width 8mm\kern 2mm%
+\hrule width 6mm\kern 2mm%
+\hrule width 4mm\kern 2mm%
+\hrule width 2mm\kern 2mm%
+\hrule width 4mm\kern 2mm%
+\hrule width 6mm\kern 2mm%
+\hrule width 8mm\kern 2mm%
+\hrule width 10mm\kern 2mm%
+\hrule width 12mm\kern 2mm%
+\hrule width 14mm\kern 2mm%
+\hrule width 16mm\kern 2mm%
+\hrule width 18mm\kern 2mm%
+\hrule width 20mm\kern 2mm%
+}% box1 as LHS lines
+
+\setbox2=\hbox{\font\times=cmr10 at 30pt\times\TeX}
+
+% Read (or later copy) the explanation of the strategy for the RHS lined box on p.96
+
+\setbox3=\vtop{%
+ \offinterlineskip%\hsize=2cm%
+ \vbox{\hrule width 20mm}\kern 2mm%
+ \moveright 2mm\vbox{\hrule width 18mm}\kern 2mm%
+ \moveright 4mm\vbox{\hrule width 16mm}\kern 2mm%
+ \moveright 6mm\vbox{\hrule width 14mm}\kern 2mm%
+ \moveright 8mm\vbox{\hrule width 12mm}\kern 2mm%
+ \moveright 10mm\vbox{\hrule width 10mm}\kern 2mm%
+ \moveright 12mm\vbox{\hrule width 8mm}\kern 2mm%
+ \moveright 14mm\vbox{\hrule width 6mm}\kern 2mm%
+ \moveright 16mm\vbox{\hrule width 4mm}\kern 2mm%
+ \moveright 18mm\vbox{\hrule width 2mm}\kern 2mm%
+ \moveright 16mm\vbox{\hrule width 4mm}\kern 2mm%
+ \moveright 14mm\vbox{\hrule width 6mm}\kern 2mm%
+ \moveright 12mm\vbox{\hrule width 8mm}\kern 2mm%
+ \moveright 10mm\vbox{\hrule width 10mm}\kern 2mm%
+ \moveright 8mm\vbox{\hrule width 12mm}\kern 2mm%
+ \moveright 6mm\vbox{\hrule width 14mm}\kern 2mm%
+ \moveright 4mm\vbox{\hrule width 16mm}\kern 2mm%
+ \moveright 2mm\vbox{\hrule width 18mm}\kern 2mm%
+ \vbox{\hrule width 20mm}\kern 2mm%
+}%: box3 as RHS lines
+
+\setbox4=\vtop{%
+ \offinterlineskip%\hsize=2cm%
+{\hfill\vbox{\hrule width 20mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 18mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 16mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 14mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 12mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 10mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 8mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 6mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 4mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 2mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 4mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 6mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 8mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 10mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 12mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 14mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 16mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 18mm}\kern 2mm}%
+{\hfill\vbox{\hrule width 20mm}\kern 2mm}%
+}%: box4 as RHS lines
+
+%\hbox to 40mm{$\vcenter{\box1}\hss\vcenter{\box2}\hss\vcenter{\box3}$}
+\par
+\hbox to 40mm{$\vcenter{\copy1}\hss\vcenter{\box2}\hss\vcenter{\box4}$}
+\par
+% DIY Two column. p.99
+
+% Extract the reusable prose from the bicycle book to show variants on the typesetting.
+
+\def\quoteWaltonRostaing{%
+The derailleur is operated by levers and cables and springs somewhat like those
+of caliper brakes. It changes gears by lifting the chain from cog to cog (rear)
+or chainring to chainring (front) It is an ancient sytem, obscurely conceived
+in the 19th century, championed by Verlocio, endlessly refined, and full of
+compromises. The chain-line is imperfect, and owing to this, certain gears
+are best avoided. And components that should apparently work together
+frequently don't.
+}%: quoteWaltonRostaing
+
+\section{\hbox{{DIY Two Column\ }$\vcenter{{\eightrmsmall imperfect version}}$}}
+
+% We start with some text in a narrow box (box2)
+
+\setbox2=\vbox{%
+ \hsize 48mm%
+ \parindent=0pt%
+ \raggedright%
+ \eightrm%
+ \baselineskip=10pt%
+\quoteWaltonRostaing
+} % box2
+
+% We grab the first vertical inch and put it into box1
+
+\setbox1=\vsplit2 to 1in
+
+% Now we assemble box1 and box2 horizontally
+
+\centerline{%
+\boxit{3pt}{\box1}%
+\hfil%
+\boxit{3pt}{\box2}%
+}%: centerline
+
+\section{\hbox{{DIY Two Column\ }$\vcenter{{\eightrmsmall impeccable version}}$}}
+
+% We start with some text in a narrow box (box2)
+
+\setbox2=\vbox{%
+ \hsize 48mm%
+ \parindent=0pt%
+ \raggedright%
+ \eightrm%
+ \baselineskip=10pt%
+% Impeccable improvements follow
+\splittopskip=\baselineskip%
+\leavevmode\vbox to \splittopskip{}%
+\quoteWaltonRostaing
+} % box2
+
+% We grab the first vertical inch and put it into box1
+% TODO: Errors in the book, or possibly changes in the unvbox command?
+%
+
+%\setbox1=\vbox{\unvbox\box2}
+%\setbox1=\vbox{\unvbox\vsplit2 to 1in}
+
+% Add another interim box to do the job
+\setbox9=\vsplit2 to .5\ht2
+\setbox1=\vbox{\unvbox9}
+
+
+% Now we assemble box1 and box2 horizontally
+
+\centerline{%
+\boxit{3pt}{\box1}%
+\hfil%
+\boxit{3pt}{\box2}%
+}%: centerline
+
+%
+% --------------------------------------------------------------------------------------
+% Boxes
+
+\hsk
+Drawing box outlines
+\par
+
+% Drawing Box Outlines : macro from p.98 ISBN 0-387-97562-4
+
+\def\drawbox#1#2#3{%
+\setbox1=\vbox{\hrule\hbox to #3{\vrule height#1\hfil\vrule}}%
+\setbox2=\hbox to #3{\vrule \dotfill\vrule}%
+\setbox3=\vtop{\hbox to #3{\vrule depth#2\hfil\vrule}\hrule}%
+\vbox{\offinterlineskip\box1\box2\box3}
+}%\drawbox
+
+% Macro to indicate the baseline (refpoint)
+% Experimenting with a non standard layout for readability?
+
+\def\refpoint{%
+	\llap{%
+		\lower2.5pt%
+			\hbox{%
+				$\longrightarrow$%
+			}%
+		}%
+} %%: \refpoint
+
+\drawbox{3mm}{5mm}{\hsize}
+\hbox{\refpoint\box1}
+
+% To use refpoint along with drawbox, we must redefine drawbox to not consume box{1,2,3} ??
+
+\hsk
+Copybox refines the macro so we can reuse box1 for the refpoint.  
+\par
+
+\def\copybox#1#2#3{%
+\setbox1=\vbox{\hrule\hbox to #3{\vrule height#1\hfil\vrule}}%
+\setbox2=\hbox to #3{\vrule \dotfill\vrule}%
+\setbox3=\vtop{\hbox to #3{\vrule depth#2\hfil\vrule}\hrule}%
+\vbox{\offinterlineskip\copy1\copy2\copy3}
+}%\copybox
+
+\copybox{3mm}{5mm}{\hsize}
+\hbox{\refpoint\box1}
+
+\hsk
+Just run the refpoint without reciting the box (expect to get the last box refpoint).
+\par
+
+\copybox{3mm}{5mm}{\hsize}
+\hbox{\refpoint}
+\efail
+
+% --------------------------------------------------------------------------------------
+
+\hsk
+Just run the refpoint without reciting the box (expect to get the last box refpoint).
+However, in this attempt, we combine the copybox and the refpoint together in an hbox
+\par
+
+\hbox{\refpoint\copybox{3mm}{5mm}{\hsize}}
+\gotit
+
+
+%\drawbox 30 20 30
+
+% TODO TODOCUMENT
+\medskip
+\hrule
+\medskip
+
+\hsk
+In preparing this document, it was discovered that {\it evince} on {\bf Ubuntu 22.04}
+was unable to render a scaled {\it cmr10} font.  The generated error related to the
+{\it cmr10} tfm font description file and asserted possible file corruption.
+\par
+It was possible to exclude file corruption as the cause of the issue by using
+\par
+\centerline {$tftopl /path/to/cmr10.tfm$}
+\par
+Curiously, {\it dvips} had no issues in converting to PostScript which evince
+was then able to render.  A mystery to be resolved.
+\medskip
+\hrule
+\medskip
+
+% Define a large font for a custom heading, then use it 
+%\font\myheadingA=cmr10 scaled \magstep1
+\font\myheadingA=cmr10 scaled 1200
+\font\myheadingB=cmr10 scaled \magstep2
+\font\myheadingC=cmr10 scaled \magstep3
+\font\myheadingD=cmr10 scaled \magstep4
+\font\myheadingE=cmr10 scaled \magstep5
+
+
+{\myheadingA BoxIt Example A}
+\hsk
+{\myheadingB BoxIt Example B}
+\hsk
+{\myheadingC BoxIt Example C}
+\hsk
+{\myheadingD BoxIt Example D}
+\hsk
+{\myheadingE BoxIt Example E}
+\hsk
+
+% Macros exercise : use iteration and a custom counter and double expansion
+% to automatically iterate over the 5 sizes.
+
+% 8.11 Example rule to draw a box around some contents, with optional marginal dimension
+
+\def\boxit#1#2{\hbox{\vrule
+\vtop{%
+ \vbox{\hrule\kern#1%
+  \hbox{\kern#1#2\kern#1}}%
+ \kern#1\hrule}%
+\vrule}}
+
+\boxit{2pt}{\TeX}
+\par
+\boxit{2pt}{\boxit{2pt}{\TeX}}
+\par
+\boxit{4pt}{\boxit{3pt}{\boxit{2pt}{\TeX}}}
+
+% Fancy lines around the TeX logo
+\setbox1=\vtop{%
+ \hrule width 20mm\kern 2mm%
+ \hrule width 18mm\kern 2mm%
+ \hrule width 16mm\kern 2mm%
+ \hrule width 14mm\kern 2mm%
+ \hrule width 12mm\kern 2mm%
+ \hrule width 10mm\kern 2mm%
+ \hrule width 8mm\kern 2mm%
+ \hrule width 6mm\kern 2mm%
+ \hrule width 4mm\kern 2mm%
+ \hrule width 2mm\kern 2mm%
+}
+
+% No PS-Times-Roman
+% Looked in /usr/share/texlive/texmf-dist/fonts/
+% \setbox2=\hbox{\font\times=PS-Times-Roman at 30pt\times\TeX}
+
+% TODO TOLEARN Font Names, installation, metafont etc.
+%\setbox2=\hbox{\font\times=courierten at 30pt\times\TeX}
+
+\hbox to 40mm{$\vcenter{\box1}\hss\vcenter{\box2}\hss\vcenter{\box1}$}
+

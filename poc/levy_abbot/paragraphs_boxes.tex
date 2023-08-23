@@ -1,0 +1,72 @@
+% Plain TeX - demonstrating some of the techniques from Levy book.
+
+\hsize=6.0in
+\input doc.mac
+A zeroth paragraph to essay: a simple math-mode backslash $ \backslash $, 
+%a typewriter font backslash {\tt\char`\} and no more than that.
+%a typewriter font backslash \textbackslash and no more than that.
+and a suprisingly complicated requirement to really grok character codes
+and fonts in an attempt to output some nicely formatted back-slashes.
+See also {\tt characters.tex} for a more in-depth treatment.
+\smallskip
+This first paragraph of text is to be typeset with $hsize=6.0in$ and no other modifications.
+It is written on
+several
+lines
+and 
+so
+in the editor, the paragraph structure is not entirely clear.
+The
+use
+of newline as a space means that this has no impact.
+The expected standard indentation style is that the first sentence is indented by 
+parindent of 20 points.
+If the newline is suppressed by a comment marker%
+we will check if a space was inserted between the words {\it marker} and {\it we}.
+
+One blank line in the file should result in a second paragraph.
+We now use input to input the lorem.tex file.
+\input lorem.tex
+
+% On escaping escapes : a technique to get familiar with
+% Mnemonic : BackSlashMaths : BSM \bsm
+\def\bsm{$\backlash $}
+% Mnemonic : BackSlashTypewriter : BST \bst
+\def\bst{{\tt\char`\\}}
+
+One aside before proceeding. If we want to render the commands that generated this
+file and not have them interpreted as a control sequence, we need to recall that the
+backslack character ($\backslash $) has a category code of zero and is the escape 
+character.  Two recommended ways to yield a backslash are to use mathmode and the
+\$$\backslash$backslash\$ control sequence, or to use the typewriter font and
+use $\{$\bst tt\bst char{`}\bst\bst$\}$ noting that to print braces requires
+mathmode and escape. i.e. \$\bst$\{$\$.
+
+\bst
+
+Here is a left quote on it's own ` 
+
+% Ref Levy p.54
+For our next trick, we demonstrate comprehension of the left and right margins
+which are controlled by \bst{leftskip} and \bst{rightskip}.
+
+{\bf This is a standard paragraph.}%
+\input lorem
+
+%TODO: Exercise ; use a register so that the text and the leftskip CANNOT be different.
+{\leftskip=-0.9in
+{\bf This is a paragraph prior to which a group with leftskip of 0.1in was set.}%
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\par
+\input lorem
+\par
+\input lorem
+\par}
+
+
+
+\par
+Weasle.
+
+\input leftskip
+\bye

@@ -1,0 +1,29 @@
+% A Beginner's Book of \TeX ; Seroul and Levy; Chapter 9
+
+% Alignment and the TeX Banner trick
+
+\hsize=115mm
+\def\hfq{\hfil\quad}
+
+
+% 3 vees in TeX
+
+\halign{%
+&\hfq\TeX\hskip#pt\TeX\hfq\cr
+\omit\hfq\TeX\hfq & 35& \omit\hfq\TeX\hfq \cr
+8&	8&	8 \cr
+35&	\omit\hfq\TeX\hfq&	35 \cr
+}
+
+% 4 vees in TeX
+
+\halign{%
+&\hfq\TeX\hskip#pt\TeX\hfq\cr
+\omit\hfq\TeX\hfq & 35& \omit\hfq\TeX\hfq& 35 \cr
+8&	8&	8& 8  \cr
+35&	\omit\hfq\TeX\hfq&	35& \omit\hfq\TeX\hfq \cr
+}
+
+
+
+\bye

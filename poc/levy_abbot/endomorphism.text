@@ -1,0 +1,13 @@
+% A Beginner's Book of \TeX ; Seroul and Levy; Chapter 1.
+
+\hsize=115mm
+\centerline{\bf 3. Endomorphism of an $A$-module of finite type}
+\medskip
+\noindent Theorem 3.1.
+{\it If $M$ is an $A$-module of finite type and $u:M\rightarrow M$ is an endomorphism of $M$,
+the following equivalence holds:
+$$
+u \hbox{ is surjective}\iff u \hbox{ is bijective.}
+$$
+
+\bye

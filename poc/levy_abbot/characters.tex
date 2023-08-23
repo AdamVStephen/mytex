@@ -1,0 +1,60 @@
+% Plain \TeX exploration of characters and how to get backslashes (and hence commands)
+
+% Levy references p208 (index for \char) and p.36 which introduces char and page 181 for registers
+
+The initial basic font is cmr10 and in this font, there are 256 characters.
+
+We can show lowercase `a' via code 97 which can be written in four forms.
+
+\item 1. $\backslash $char{97} gives $\longrightarrow$ \char97
+\item 2. $\backslash $char{'141} gives $\longrightarrow$ \char'141 \ using octal ($64+32+1$).
+\item 3. $\backslash $char{"61} gives $\longrightarrow$ \char"61 \ using hex ($96+1$).
+\item 4. $\backslash $char{`$\backslash$a} gives $\longrightarrow$ \char`\a \ extracting the value for a with operator left-quote backslash.
+
+Note that the construction `$\backslash$ gives the value of the next character which is
+why the final version works.
+
+To render as a number the extracted value that the operator gives needs a macro that
+can take a value and then show it.  One indirect solution would be via a new variable.
+
+\newcount\charval
+We have created a $\backslash$newcount$\backslash$charval new counter and will
+demonstrate that it works using the current year.
+\charval=2023
+The current year as held in $\backslash$charval is \the\charval.
+\charval=`\a
+The value for {\it a} extracted via the operator and stored in charval is \the\charval.
+
+% TODO: Exercise to attempt
+% Without using the intermediate register, we can attempt `\a to extract directly.
+
+\medskip
+\hrule
+My First Loop Attempt
+\hrule
+
+In the next paragraph, I attempt to iterate over the alphabet using a loop construction.
+Note that this is not covered in {\it Levy} but a sound example can be taken the paper on 
+{\it Sorting within \TeX} by Kees van der Laan.
+
+\newcount\i\i=97
+\newcount\j\j=\i\advance\j26
+\newcount\alphapos\alphapos=1
+\newcount\a\a=1
+\newcount\v\v=1
+\newcount\veegap\veegap=52
+
+{\loop\ifnum \i<\j%
+\line{%
+% Inject prefill spaces to the tune of the alphabetical position
+\a=1{\loop\ifnum \a<\alphapos \ \advance\a1\repeat}
+\the\i \ \char\i %
+\v=1{\loop\ifnum \v<\veegap \ \advance\v1\repeat}%
+\char\i \ \the\i \ \the\veegap \ \the\alphapos \ \hfill }%
+\advance\i by 1\advance\alphapos1\advance\veegap by -2\repeat}
+
+Section 12.5 in Levy is important in defining {\it active} characters.  These are of
+catcode 13 (or $\backslash$\active) and can be defined to be control sequences or macros.
+
+
+\bye

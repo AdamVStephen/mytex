@@ -1,0 +1,64 @@
+% Section 6.9 Levy
+
+
+An example custom itemized page layout with graphic titles to the left and paragraphs
+on the right hand side.  Useful to grok paragraph formatting with box layout.
+
+\def\leftitem#1{\item{\hbox to\parindent{\enspace#1\hfill}}}
+
+%\newdimen\waspi
+%\waspi=parindent
+
+Parindent initially is \the\parindent
+\medskip
+{
+\parindent=1in
+\leftitem{\bf \TeX Software}
+Maria Code, DP Services\hfill\break
+1371 Sydney Drive\hfill\break
+Sunyvalue, CA 94807
+\par
+}
+\medskip Parindent returns to \the\parindent
+\input lorem
+\par
+An example using a smashed vbox to format the text is as follows
+\medskip
+{
+\parindent=1in
+\leftitem{\smash{\vtop{\hbox{\bf \TeX}\hbox{\bf Software}}}}
+Maria Code, DP Services\hfill\break
+1371 Sydney Drive\hfill\break
+Sunyvalue, CA 94807
+\par
+}
+\medskip 
+\input lorem
+\par
+An example omitting the smashed vbox to format the text is as follows
+\medskip
+{
+\parindent=1in
+\leftitem{\vtop{\hbox{\bf \TeX}\hbox{\bf Software}}}
+Maria Code, DP Services\hfill\break
+1371 Sydney Drive\hfill\break
+Sunyvalue, CA 94807
+\par
+}
+This is a good illustration of how the smash macro prints out the text
+but then does not consume any space on the page so the alignment of the second
+and third lines of the address are not displaced down the page.
+
+To illustrate that such material can overlap itself...
+{
+\parindent=1in
+\leftitem{\smash{\vtop{\hbox{\bf \TeX}\hbox{\bf Software}}}}
+\leftitem{\smash{\vtop{\hskip 0.25in\hbox{\bf \TeX}\hbox{\bf Software}}}}
+Maria Code, DP Services\hfill\break
+1371 Sydney Drive\hfill\break
+Sunyvalue, CA 94807
+\par }
+
+
+\bye
+

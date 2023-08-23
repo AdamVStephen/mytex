@@ -1,0 +1,245 @@
+
+% A Beginner's Book of \TeX ; Seroul and Levy; Chapter 8.
+%
+% A problem was encountered in reproducing the nicely framed TeX logo
+% from page 96.  This file is to try and refine where the problem arises.
+
+% The crux of the problem is to produce a set of horizontal rules that are right justified.
+% The strategy given is to 
+% define a box
+% comprising a \vtop{} vertically stacked collection of entities
+% recalling that vtop enters internal vertical mode, but leaves the baseline at the top box base
+% the entities to be stacked vertically are each the horizontal rules plus offset
+%
+% one of the main comprehension aspects is how the successive elements within a vbox are treated
+% i.e. what governs each successive element if it is not itself an explicit box.
+\hsize=115mm
+\def\shsz{(hsize is \the\hsize)}
+\def\localsection#1{\medskip\hrule\medskip#1\shsz\medskip\hrule width \hsize\medskip\par}
+
+The shsz is \shsz .
+
+% TODO: figure out how to do this kind of thing
+%\newcommand\dimtomm[1]{%
+%    \strip@pt\dimexpr 0.352777778\dimexpr#1\relax\relax
+%}
+%\localsection{Default Hsize is \the\hsize aka \dimtomm\hsize}
+%
+\localsection{Default Hsize is \the\hsize} 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+And yet the hrule runs further across the page than just the hsize.
+\hrule
+\par
+\hsize=100mm
+\localsection{New Hsize is \the\hsize} 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+And yet the hrule runs further across the page than just the hsize.
+
+Here we place an hfill \hfill and there is the RHS.
+
+\def\hfdemo{{\bf hfill}\hfill}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing \hfdemo elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad \hfdemo minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo \hfdemo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\hrule
+\hrule
+\par
+
+% This barebones attempt fails with a tex error from \bye that says \end is
+% invalid when we are still in "internal vertical mode"
+% The hint here then is that linebreaks could be crucial (whitespace as syntax)
+% Recall from Ch8 intro that from Ch3, there are the following intrinsic modes
+
+% Horizontal mode: emitting from side to side
+%% Ordinary horizontal mode: for paragraph setting (long horizontal list to be split later)
+%% Restricted horizontal mode: when setting text within an \hbox or \halign : no line breaking
+
+% Vertical mode: emitting from top to bottom
+%% Ordinary vertical mode: stacking to page length, then ship the page
+%% Internal vertical mode: no restriction on the 
+
+% Math mode: special rules
+%% Text math mode $ to $
+%% Display math mode $$ to $$ (all centered on a line)
+
+% Mode changes
+% INIT: ordinary vertical mode, until a character indicates a paragraph is starting
+% Horizontal mode : during a paragraph until \hbox or \halign or \par or blank line or vertical command
+
+% Commands are interpreted differently in different modes (think VIM)
+%
+% Run interactively to get a feel for when the modes switch.
+
+%-------------------------------------------------------------------------------- 
+% We demonstrate a series of vertically stacked capital alphabets with variations
+%-------------------------------------------------------------------------------- 
+%
+\localsection{Capitals AB as vbox then vbox with 5mm kern.}
+
+% First AB with no kerning
+
+\vtop{
+\vbox{A}
+\vbox{B}
+}
+
+% Now AB with 5mm of kerning
+\vtop{
+\vbox{A}\kern 5mm
+\vbox{B}\kern 5mm
+}
+
+%-------------------------------------------------------------------------------- 
+
+%-------------------------------------------------------------------------------- 
+% Now make the two vertical capital lists run across the page with an \hbox outer 
+%-------------------------------------------------------------------------------- 
+%
+\localsection{Capitals AB as vbox then vbox with 5mm kern.}
+
+% First AB with no kerning
+\hbox{
+ \vtop{
+ \vbox{A}
+ \vbox{B}
+ }
+%  Now AB with 5mm of kerning
+ \vtop{
+ \vbox{A}\kern 5mm
+ \vbox{B}\kern 5mm
+ }
+}
+ 
+Commentary: the two vertical stacks are positioned equidistance across the page.
+%-------------------------------------------------------------------------------- 
+
+%-------------------------------------------------------------------------------- 
+% Now control the horizontal spacing by adding \hfill infinite glue
+%-------------------------------------------------------------------------------- 
+%
+
+\localsection{Dual AB with infinite hfill to RHS}
+
+% First AB with no kerning
+\hbox{
+ \vtop{
+ \vbox{A}
+ \vbox{B}
+ }
+%  Now AB with 5mm of kerning
+ \vtop{
+ \vbox{A}\kern 5mm
+ \vbox{B}\kern 5mm
+ }
+% Now infinite hfill to the RHS
+\hfill
+}
+ 
+Commentary: the hfill trailing has no effect.
+%-------------------------------------------------------------------------------- 
+
+%-------------------------------------------------------------------------------- 
+% Fix the failure of hfill to amend things (theory : spaces for formatting issue) 
+% TeX inspiration
+% The reason that it is not common to vertically spread TeX code is that the
+% need for whitespace as document whitespace overrides whitespace for code syntax?
+% How can I have a visual space that is just ignored by TeX ?
+%-------------------------------------------------------------------------------- 
+%
+
+\localsection{Dual AB with infinite hfill to RHS : no leading space}
+
+\hbox{
+\vtop{
+\vbox{A}
+\vbox{B}
+}
+\vtop{
+\vbox{A}\kern 5mm
+\vbox{B}\kern 5mm
+}
+\hfill
+}
+ 
+Commentary: the hfill trailing has no effect.
+%-------------------------------------------------------------------------------- 
+
+%-------------------------------------------------------------------------------- 
+% Fix the failure of hfill to amend things (theory : spaces for formatting issue) 
+% TeX inspiration
+% The reason that it is not common to vertically spread TeX code is that the
+% need for whitespace as document whitespace overrides whitespace for code syntax?
+% How can I have a visual space that is just ignored by TeX ?
+%-------------------------------------------------------------------------------- 
+%
+
+\localsection{Dual AB with infinite hfill to RHS : surrounded in a hbox} 
+
+\hbox{%
+\vtop{%
+\vbox{A}%
+\vbox{B}%
+}%
+\vtop{%
+\vbox{A}\kern 5mm%
+\vbox{B}\kern 5mm%
+}%
+\hbox to \hsize {\hfill}%
+}%
+ 
+Commentary: the hfill trailing has no effect.
+%-------------------------------------------------------------------------------- 
+
+
+%-------------------------------------------------------------------------------- 
+% Fix the failure of hfill to amend things (theory : spaces for formatting issue) 
+% TeX inspiration
+% The reason that it is not common to vertically spread TeX code is that the
+% need for whitespace as document whitespace overrides whitespace for code syntax?
+% How can I have a visual space that is just ignored by TeX ?
+%-------------------------------------------------------------------------------- 
+%
+
+\localsection{Dual AB with infinite hfill to RHS : wrap hfill in vtop}
+
+\hbox to \hsize{%
+\hss
+\vtop{%
+\vbox{A}%
+\vbox{B}%
+}%
+\hss%
+\vtop{%
+\vbox{A}\kern 5mm%
+\vbox{B}\kern 5mm%
+}%
+\hss
+}%
+ 
+Commentary: the hfill trailing has no effect.
+%-------------------------------------------------------------------------------- 
+
+
+\localsection{Simpler Hboxes}
+
+\hbox to \hsize{A \hss B}
+\hbox to \hsize{\hss A B}
+\hbox to \hsize{A B \hss}
+
+\hbox to \hsize{
+\hbox{\vtop{\vbox{A}\vbox{B}}}
+\hfil
+\hbox{\vtop{\vbox{B}\vbox{A}}}
+}
+
+\hbox to \hsize{
+\hbox{\vtop{\hbox{A}\hbox{B}}}
+\hfil
+\hbox{\vtop{\hbox{B}\hbox{A}}}
+}
+
+
+
+\bye

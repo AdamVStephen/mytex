@@ -1,0 +1,90 @@
+\TeX Tips and Tricks
+
+{\bf Read the log file.}
+
+For example, trying to create a macro to render a backslash without using math mode
+can generate a double left quote, not because the command sequence is incorrect,
+but because if typewriter fonts are not installed and configured, the sequence
+is rendered in cmr10 in which the ASCII character code for the backslash in
+typewriter font is a left quote.  {\bf \it Hmmmmph.}
+
+{\bf TIP: create both .dvi and .ps and compare both if nonsensical results are obtained.}
+
+Font errors may be permissions related.
+
+%kpathsea: Running mktexpk --mfmode / --bdpi 600 --mag 1+0/600 --dpi 600 cmtt10
+%mktexpk: Permission denied
+%kpathsea: Appending font creation commands to missfont.log.
+%page: Warning: font `cmtt10' at 600x600 not found, trying `cmr10' instead
+%page: Warning: cmtt10: checksum mismatch (expected 3756670072, got 1274110073)
+
+https://tex.stackexchange.com/questions/334440/tex-live-installation-and-a-problem-of-getting-evince-to-show-dvi-files
+
+The problem is with evince and apparmor
+
+Braces and Symbols and Input vs Font Enconding
+
+https://stackoverflow.com/questions/48972814/code-in-latex-for-braces
+https://tex.stackexchange.com/questions/44694/fontenc-vs-inputenc
+
+Look at the techniques show in {\it A Gentle Introduction to \TeX}
+
+\def\\{\char92{}}          %%%%% backslash %%%%% 
+\def\lb{\char'173{}}       %%%%% left brace %%%%% 
+\def\rb{\char'175{}}       %%%%% right brace %%%%% 
+\def\sp{\char32{}}         %%%%% special space symbol %%%%% 
+ 
+\def\beginliteral{ 
+\vskip\baselineskip 
+\begingroup 
+\tt 
+\obeylines 
+%{\obeyspaces\global\let =\ } 
+\catcode`\@=0 
+\parskip=0pt\parindent=0pt 
+\catcode`\$=12\catcode`\&=12\catcode`\^=12\catcode`\#=12 
+\catcode`\_=12\catcode`\~=12 
+\def\par{\leavevmode\endgraf} 
+\catcode`\{=12\catcode`\}=12\catcode`\%=12\catcode`\\=12 
+} 
+ 
+\def\endliteral{\endgroup} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ 
+Borrowing from Michael Doob (Uni Manitoba) having defined some brace macros
+and also a literal environment we should be good to leftbrace ({\tt \lb}) and ({\tt \rb})
+as long as we use {\tt typewriter font} otherwise the characters yield (\lb) and (\rb).
+
+Next we set out a literal stanza
+
+\beginliteral
+This is literal stuff {}
+% $ ^ @ @ 
+@endliteral
+
+Exercise for the writer and reader is to explain why the literal environment 
+has to be defined by the use of the @ character (hint catcode escape)
+and then how to make a literal environment to support literal at.
+
+
+% TODO: why did I WRONGLY get this impression ?
+%
+%{\bf Don't abuse the comment marker}
+%Be wary of setting a variable and then applying the comment marker without a space.
+%The impact is that the line continuation will be included in the definition of
+%the variable and invariably (boom, boom) the value on the RHS will not be what you
+%require.  It probably will also give bad effects.
+%
+%For example, try using leftskip to indent a paragraph.  Here are a working and failing
+%version that differ only by one character.
+%
+%{\leftskip=1.5in% this will not work
+%Foo is a paragraph with a {\bf lot} of indentation.
+%\par}
+%
+%{\leftskip=1.5in % this will work
+%Foo is a paragraph with a {\bf lot} of indentation.
+%\par}
+
+\bye
+

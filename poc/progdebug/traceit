@@ -1,0 +1,22 @@
+% vim: ft=plaintex
+% These commands to be read in interactive mode
+% Do this by running tex
+\relax
+\tracingcommands=1
+\tracingonline=1
+\hbox{
+a
+$x$
+\vbox{
+b\par
+c}
+}
+% Some reminders of ways to get TeX to help us
+\def\foo{Foo is a macro.}
+\show\foo
+\foo
+% Boxes are a handy thing and we can emit box contents to the log for debugging.
+\setbox1=\hbox{Not so much of a box as some prose}
+\showbox1
+\box1
+\bye

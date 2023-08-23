@@ -1,0 +1,70 @@
+% A Beginner's Book of \TeX ; Seroul and Levy; Chapter 1.
+
+% To debug, use the conditional and also change invocation to be
+% tex --interaction=nonstopmode
+
+\newif\ifdodebug\dodebugfalse
+
+\ifdodebug{%
+\relax
+\tracingcommands=1
+\tracingonline=1
+}%
+\else{%
+{}
+}%
+
+% Some macros to illustrate use of plain tex
+
+\hsize=4.5in
+\vsize=6in
+\parindent=1in
+
+% For a less verbose experience focussing on most recent error
+\errorcontextlines=0
+
+% To mark overfull boxes in the margin
+\overfullrule=5pt
+
+% To ignore negligible margin invasion
+\hfuzz=1pt
+
+% Fonts
+\font\eightrm=cmr8
+\font\eightrmsmall=cmr8 scaled 500
+
+% From Chapter 8 on Boxes
+
+\def\boxit#1#2{\hbox{\vrule
+\vtop{%
+ \vbox{\hrule\kern#1%
+  \hbox{\kern#1#2\kern#1}}%
+ \kern#1\hrule}%
+\vrule}}
+
+%Look at the techniques show in {\it A Gentle Introduction to \TeX}
+% Thanks to Michael Doob
+% Since these must always be in typewriter font, we make it so
+
+\def\\{{\tt \char92{}}}          %%%%% backslash %%%%% 
+\def\lb{{\tt \char'173{}}}       %%%%% left brace %%%%% 
+\def\rb{{\tt \char'175{}}}       %%%%% right brace %%%%% 
+\def\sp{{\tt \char32{}}}         %%%%% special space symbol %%%%% 
+ 
+\def\beginliteral{ 
+\vskip\baselineskip 
+\begingroup 
+\tt 
+\obeylines 
+%{\obeyspaces\global\let =\ } 
+\catcode`\@=0 
+\parskip=0pt\parindent=0pt 
+\catcode`\$=12\catcode`\&=12\catcode`\^=12\catcode`\#=12 
+\catcode`\_=12\catcode`\~=12 
+\def\par{\leavevmode\endgraf} 
+\catcode`\{=12\catcode`\}=12\catcode`\%=12\catcode`\\=12 
+} 
+ 
+\def\endliteral{\endgroup} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ 

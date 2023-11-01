@@ -1,0 +1,42 @@
+% Section 6.11 Levy
+
+
+An example custom parshape demonstration.  Goal is to have two triangular pieces of text that
+we merge together with boxes.
+
+\def\leftitem#1{\item{\hbox to\parindent{\enspace#1\hfill}}}
+
+%\newdimen\waspi
+%\waspi=parindent
+
+Below this paragraph, we make a right leaning triangle.
+
+%\eightpoint
+\parshape=9 0cm 2.0cm%
+0cm 2.5cm%
+0cm 3.0cm%
+0cm 3.5cm%
+0cm 4.0cm%
+0cm 4.5cm%
+0cm 5.0cm%
+0cm 5.5cm%
+0cm 6.0cm%
+This paragraph has some lines to be split across triangular spacing.
+This paragraph has some lines to be split across triangular spacing.
+This paragraph has some lines to be split across triangular spacing.
+
+\parshape=9 0cm 6.0cm%
+0cm 5.5cm%
+0cm 5.0cm%
+0cm 4.5cm%
+0cm 4.0cm%
+0cm 3.5cm%
+0cm 3.0cm%
+0cm 2.5cm%
+0cm 2.0cm%
+This paragraph has some lines to be split across triangular spacing.
+This paragraph has some lines to be split across triangular spacing.
+This paragraph has some lines to be split across triangular spacing.
+
+
+\bye
